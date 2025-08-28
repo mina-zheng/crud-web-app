@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Mini Library</title>
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <table class = "user">
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Liked Books Indices</th>
+                </tr>
+                {% for book in books %}
+                <tr>
+                    <td> {{ book.name }} </td>
+                    <td> {{ book.price }}</td>
+                </tr>
+                <td>
+                    <form method = "POST">
+                        {% csrf_token %}
+                        <button type = "submit" name = "delete-book" value = "{{ book.name }}">Delete</button>
+                    </form>
+                </td>
+                {% endfor %}
+                
+            </table>
+            <table class = "library">
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <td> {{ user.name }} </td>
+                    <td> {{ user.age }}</td>
+                    <td> {{ user.liked_book_indices}} </td>
+                </tr>
+                <td>
+                    <form method = "POST">
+                        {% csrf_token %}
+                        <button type = "submit" name = "delete-user" value = "{{ user.name }}">Delete</button>
+                    </form>
+                </td>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>
