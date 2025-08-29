@@ -10,13 +10,12 @@
             <table class = "user">
                 <tr>
                     <th>Name</th>
-                    <th>Age</th>
-                    <th>Liked Books Indices</th>
+                    <th>Price</th>
                 </tr>
                 {% for book in books %}
                 <tr>
                     <td> {{ book.name }} </td>
-                    <td> {{ book.price }}</td>
+                    <td> ${{ book.price }}</td>
                 </tr>
                 <td>
                     <form method = "POST">
@@ -30,7 +29,8 @@
             <table class = "library">
                 <tr>
                     <th>Name</th>
-                    <th>Price</th>
+                    <th>Age</th>
+                    <th>Liked Book Indices</th>
                 </tr>
                 {% for user in users %}
                 <tr>
@@ -47,5 +47,31 @@
                 {% endfor %}
             </table>
         </div>
+        <div class = "actions">
+            <div class = "add-user">
+                <form method = "POST">
+                    {% csrf_token %} 
+                    {{ users_form.as_p }}
+                    <button type="submit" name="add-user">Add User</button>
+
+                </form>
+            </div>
+            <div class = "add-book">
+                <form method = "POST">
+                    {% csrf_token %} 
+                    {{ books_form.as_p }}
+                    <button type="submit" name="add-book">Add Book</button>
+
+                </form>
+            </div>
+
+            <div class = "query">
+                <form method = "POST">
+                    {% csrf_token %}
+                    {{ query_form.as_p }}
+                </form>
+            </div>
+        </div>
+
     </body>
 </html>
