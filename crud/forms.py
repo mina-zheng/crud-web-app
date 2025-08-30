@@ -16,10 +16,12 @@ class BooksForm(forms.ModelForm):
 
 class QueryForm(forms.Form):
     db = forms.ChoiceField(choices=[
+        ('-----', '-----'),
         ('Users', 'Users'),
         ('Books', 'Books'),
     ])
     keyword = forms.ChoiceField(choices=[
+        ('-----', '-----'),
         ('User Name', 'User Name'),
         ('Age', 'Age'),
         ('Liked_Book_indices', 'Liked Book Indices'),
@@ -27,6 +29,7 @@ class QueryForm(forms.Form):
         ('Price', 'Price'),
     ])
     sign = forms.ChoiceField(choices=[
+        ('-----', '-----'),
         ('=', '='),
         ('<', '<'),
         ('>', '>'),

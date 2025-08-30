@@ -9,11 +9,13 @@
         <div class="wrapper">
             <table class = "user">
                 <tr>
+                    <th>Id</th>
                     <th>Name</th>
                     <th>Price</th>
                 </tr>
                 {% for book in books %}
                 <tr>
+                    <td> {{ book.id }} </td>
                     <td> {{ book.name }} </td>
                     <td> ${{ book.price }}</td>
                 </tr>
@@ -37,6 +39,12 @@
                     <td> {{ user.name }} </td>
                     <td> {{ user.age }}</td>
                     <td> {{ user.liked_book_indices}} </td>
+                    <td>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="show-books" value="{{ user.liked_book_indices }}">Show Liked Books</button>
+                        </form>
+                    </td>
                 </tr>
                 <td>
                     <form method = "POST">
@@ -46,6 +54,26 @@
                 </td>
                 {% endfor %}
             </table>
+            <div class = 'liked'>
+                {% if liked %}
+                    <h3> Liked Books </h3>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+                        {% for book in liked %}
+                        <tr>
+                            <td>{{ book.id }}</td>
+                            <td>{{ book.name }}</td>
+                            <td>{{ book.price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+
+            </div>
         </div>
         <div class = "actions">
             <div class = "add-user">
@@ -53,7 +81,7 @@
                     {% csrf_token %} 
                     {{ users_form.as_p }}
                     <button type="submit" name="add-user">Add User</button>
-
+ 
                 </form>
             </div>
             <div class = "add-book">
@@ -69,7 +97,42 @@
                 <form method = "POST">
                     {% csrf_token %}
                     {{ query_form.as_p }}
+                    <button type = "submit" name = "query">Query</button>
                 </form>
+                
+                {% if res %}
+                    <h3>Query Results:</h3>
+                    {% if db == "Books" %}
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Price</th>
+                            </tr>
+                            {% for book in res %}
+                            <tr>
+                                <td>{{ book.name }}</td>
+                                <td>{{ book.price }} </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+
+                    {% elif db == "Users" %}
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Liked Book Indices</th>
+                            </tr>
+                            {% for user in res %}
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.age }}</td>
+                                <td>{{ user.liked_book_indices }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
 
