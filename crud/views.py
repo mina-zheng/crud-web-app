@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect #type:ignore
 
 def index(request):
     res, db = None, None
+    liked = Books.objects.none()
     if request.method == "POST":
         if "delete-book" in request.POST:
             delete(request, "book", Books)
